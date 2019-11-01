@@ -13,7 +13,7 @@ class City:
         print(f"{self.name}, {self.lat}, {self.lon} ")
 
     def __repr__(self):  # easier to read for the dev - formatting the CLI
-        return f"{repr(self.name), (self.lat), (self.lon)}"
+        return f"{self.name}, {self.lat}, {self.lon}"
 
 
 # We have a collection of US cities with population over 750,000 stored in the
@@ -35,16 +35,17 @@ def cityreader(cities=[]):
     # TODO Implement the functionality to read from the 'cities.csv' file
     # For each city record, create a new City instance and add it to the
     # `cities` list
-    with open("cities.csv", newline="") as city_file:
-        cityReader = csv.DictReader(city_file)
-        for row in cityReader:
-            new_cities = City(row["city"], float(row['lat']), float(row['lng']))
-        cities.append(new_cities)
-    return cities
+    with open("cities.csv") as city_file:
+        for row in city_file:
+            new_row = row.split(',')
+            #print(new_row)
+            cities.append(City(new_row[0], new_row[3], new_row[4]))
+        return cities
 
 
 cityreader(cities)
 
+#
 # Print the list of cities (name, lat, lon), 1 record per line.
 for c in cities:
     print(repr(c))
